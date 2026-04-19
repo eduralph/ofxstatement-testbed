@@ -1,0 +1,33 @@
+{
+	"folders": [
+		{
+			"name": "testbed",
+			"path": "."
+		},
+		{
+			"name": "ofxstatement (core, fork)",
+			"path": "../ofxstatement"
+		},
+		{
+			"name": "ofxstatement-consorsbank",
+			"path": "../ofxstatement-consorsbank"
+		},
+		{
+			"name": "ofxstatement-paypal-2 (fork)",
+			"path": "../ofxstatement-paypal-2"
+		},
+		{
+			"name": "ofxstatement-revolut",
+			"path": "../ofxstatement-revolut"
+		},
+		{
+			"name": "ofxstatement-scalable",
+			"path": "../ofxstatement-scalable"
+		}
+	],
+	"settings": {
+		"python.defaultInterpreterPath": "${workspaceFolder:testbed}/.venv/bin/python",
+		"python.testing.pytestEnabled": true,
+		"python.testing.unittestEnabled": false
+	}
+}

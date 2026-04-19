@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Weekly Monday 06:00 UTC: catch upstream-core drift early
+    - cron: '0 6 * * 1'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+        core-source:
+          - pypi
+          - kedder-master
+          - eduralph-master
+
+    steps:
+      - name: Checkout testbed
+        uses: actions/checkout@v4
+        with:
+          path: ofxstatement-testbed
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Clone plugin repos as siblings
+        run: |
+          for repo in ofxstatement-revolut ofxstatement-scalable ofxstatement-consorsbank ofxstatement-paypal-2; do
+            git clone --depth 1 "https://github.com/eduralph/$repo.git"
+          done
+
+      - name: Install core ofxstatement (${{ matrix.core-source }})
+        run: |
+          python -m pip install --upgrade pip
+          case "${{ matrix.core-source }}" in
+            pypi)
+              pip install ofxstatement
+              ;;
+            kedder-master)
+              pip install "git+https://github.com/kedder/ofxstatement.git@master"
+              ;;
+            eduralph-master)
+              pip install "git+https://github.com/eduralph/ofxstatement.git@master"
+              ;;
+          esac
+
+      - name: Install plugins (editable)
+        run: |
+          for plugin in ofxstatement-revolut ofxstatement-scalable ofxstatement-consorsbank ofxstatement-paypal-2; do
+            pip install -e "./$plugin"
+          done
+          pip install pytest
+
+      - name: Run all plugin tests
+        run: bash ofxstatement-testbed/scripts/test-all.sh
