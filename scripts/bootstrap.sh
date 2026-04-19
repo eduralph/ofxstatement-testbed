@@ -35,7 +35,7 @@ for plugin in ofxstatement-revolut ofxstatement-scalable ofxstatement-consorsban
     install_editable "$plugin" "[dev]"
 done
 
-pip install ruff
+pip install ruff pytest-cov  # pytest-cov required by core ofxstatement's pytest.ini
 
 echo
 echo "Done. Activate with: source $VENV/bin/activate"
