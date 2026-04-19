@@ -205,3 +205,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Claude Code local state (track settings.json, ignore the rest)
+.claude/*
+!.claude/settings.json
