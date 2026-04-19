@@ -20,10 +20,11 @@ python -m pip install --upgrade pip
 
 install_editable() {
     local name="$1"
+    local extras="${2:-}"
     local dir="$WORKSPACE_DIR/$name"
     if [[ -d "$dir" ]]; then
-        echo "==> pip install -e $name"
-        pip install -e "$dir"
+        echo "==> pip install -e $name$extras"
+        pip install -e "$dir$extras"
     else
         echo "!!  $name not cloned -- run scripts/clone.sh first"
     fi
@@ -31,10 +32,10 @@ install_editable() {
 
 install_editable "ofxstatement"
 for plugin in ofxstatement-revolut ofxstatement-scalable ofxstatement-consorsbank ofxstatement-paypal-2; do
-    install_editable "$plugin"
+    install_editable "$plugin" "[dev]"
 done
 
-pip install pytest ruff
+pip install ruff
 
 echo
 echo "Done. Activate with: source $VENV/bin/activate"

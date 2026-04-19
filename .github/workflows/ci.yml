@@ -53,12 +53,11 @@ jobs:
               ;;
           esac
 
-      - name: Install plugins (editable)
+      - name: Install plugins (editable, with [dev] extras)
         run: |
           for plugin in ofxstatement-revolut ofxstatement-scalable ofxstatement-consorsbank ofxstatement-paypal-2; do
-            pip install -e "./$plugin"
+            pip install -e "./$plugin[dev]"
           done
-          pip install pytest
 
       - name: Run all plugin tests
         run: bash ofxstatement-testbed/scripts/test-all.sh
