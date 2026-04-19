@@ -52,8 +52,8 @@ All four plugins declare dev/test deps under `[project.optional-dependencies].de
 
 ```sh
 ./scripts/clone.sh        # clone siblings, set upstream remotes on the two forks
-./scripts/bootstrap.sh    # create .venv, pip install -e core + all plugins[dev], + ruff
-./scripts/test-all.sh     # pytest per-plugin; passes/fails/skips summary
+./scripts/bootstrap.sh    # create .venv, pip install -e core + all plugins[dev], + ruff + pytest-cov
+./scripts/test-all.sh     # pytest in core + each plugin; passes/fails/skips summary
 ./scripts/sync-upstream.sh  # READ-ONLY drift report for the two forks; never merges
 ```
 
