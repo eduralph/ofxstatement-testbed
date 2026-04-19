@@ -18,6 +18,7 @@ repos=(
     ofxstatement-scalable
     ofxstatement-consorsbank
     ofxstatement-paypal-2
+    ofxstatement-testbed   # its own tests/e2e/ suite
 )
 
 declare -a passed=()

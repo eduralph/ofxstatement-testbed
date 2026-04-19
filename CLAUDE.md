@@ -53,7 +53,7 @@ All four plugins declare dev/test deps under `[project.optional-dependencies].de
 ```sh
 ./scripts/clone.sh        # clone siblings, set upstream remotes on the two forks
 ./scripts/bootstrap.sh    # create .venv, pip install -e core + all plugins[dev], + ruff + pytest-cov
-./scripts/test-all.sh     # pytest in core + each plugin; passes/fails/skips summary
+./scripts/test-all.sh     # pytest in core + each plugin + testbed E2E suite; passes/fails/skips summary
 ./scripts/sync-upstream.sh  # READ-ONLY drift report for the two forks; never merges
 ```
 
@@ -66,5 +66,5 @@ All four plugins declare dev/test deps under `[project.optional-dependencies].de
 - Don't assume default branch is `main` for the aggregated repos — it's `master`.
 - Don't try to `git push` to `master` on the aggregated repos — it's blocked. Open a PR.
 - Don't add features, hooks, or abstractions to the scripts unless asked; they're deliberately minimal.
-- Don't centralise test fixtures. Each plugin keeps its own `tests/` folder; the testbed aggregates, it does not own fixtures.
+- Don't centralise plugin unit-test fixtures. Each plugin keeps its own `tests/` folder for unit tests. The **E2E** suite is the one exception and lives in `tests/e2e/` in this repo — it parametrizes over sample files that still live with each plugin at `<plugin>/tests/samples/<stem>.<ext>` + `<stem>.expected.ofx`. No samples live in the testbed itself.
 - `scripts/sync-upstream.sh` must stay read-only — do not add an auto-merge path.
